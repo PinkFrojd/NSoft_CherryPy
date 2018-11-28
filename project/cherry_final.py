@@ -1,4 +1,5 @@
 import difflib
+import json
 import operator
 import sqlite3
 import time
@@ -8,7 +9,8 @@ import signal
 
 import cherrypy
 
-from project import utils
+import utils
+import logs_timer  # Za zadatak 3
 
 PROCESSES_EXECUTED = []  # List for /status route
 
@@ -54,8 +56,7 @@ class ProcessControl(object):
             PROCESSES_EXECUTED.append({'name': process_names[_p],
                                        'PID': process_pids[_p]})
 
-        # Response je serijalizirana lista PID-ova pretvorenih u string.
-        return [int(p) for p in process_pids]
+        return json.dumps([int(p) for p in process_pids])
 
     @cherrypy.expose
     def stop(self, pid):
@@ -71,8 +72,6 @@ class ProcessControl(object):
             return 'Process with PID {} does not exist'.format(pid)
         except ValueError:
             return 'Invalid PID entered'
-        finally:
-            return 'Something else happened...'
 
     @cherrypy.expose
     def status(self):
@@ -81,7 +80,7 @@ class ProcessControl(object):
         Ispisati listu procesa (tj njihovih pidova) koje
         smo pokrenuli funkcionalnoscu iz prve tocke.
 
-        :returns: str resp: Lista sa imenom i prikaldnim PID-om procesa
+        :returns: str resp: Lista sa imenom i prikladnim PID-om procesa
         """
 
         return [process.get('name') + ' ' + str(process.get('PID')) + ' '
@@ -202,4 +201,3 @@ if __name__ == '__main__':
     cherrypy.engine.subscribe('stop', utils.cleanup)
 
     cherrypy.quickstart(ProcessControl(), '/', "app.conf")
-
