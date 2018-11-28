@@ -1,12 +1,12 @@
 import difflib
 import operator
 import platform
-import json
 import sqlite3
 import time
 import os
 import subprocess
 import signal
+import json
 
 import cherrypy
 
@@ -16,6 +16,11 @@ PROCESSES_EXECUTED = []  # List for /status route
 
 class ProcessControl(object):
 
+    @cherrypy.expose
+    def index(self):
+        return "Dummy Welcome"
+
+    # Zadatak 1 - Start, Stop i Status
     @cherrypy.expose
     @cherrypy.tools.json_out()
     def start(self):
@@ -38,7 +43,7 @@ class ProcessControl(object):
             try:
                 # Dohvatanje PID-a procesa
                 process_pids.append(int(subprocess.check_output(['pidof', '-s', process])))
-            except Exception as e:
+            except Exception:
                 raise ValueError('No process named: {}'.format(process))
 
         # Svi pokrenuti procesi i PID-ovi za /status rutu
@@ -46,9 +51,8 @@ class ProcessControl(object):
             PROCESSES_EXECUTED.append({'name': process_names[_p],
                                        'PID': process_pids[_p]})
 
-
         # Response je lista svih PID-ova
-        return [int(p) for p in process_pids]
+        return json.dumps([int(p) for p in process_pids])
 
     @cherrypy.expose
     def stop(self, pid):
@@ -77,31 +81,35 @@ class ProcessControl(object):
 
         return resp
 
-    # Zadatak 2 i 4
     @cherrypy.expose
     @cherrypy.tools.json_out()
     def information(self):
+
         with sqlite3.connect(DATABASE) as c:
+            # Unos u bazu podatka u tablicu "information"
             c.execute("INSERT INTO information VALUES (?, ?, ?)",
                       [platform.platform(),
                        platform.architecture()[0] + platform.version(),
                        platform.processor()]
                       )
+
+            # Čitanje zapisanog iz tablice "information".
             r = c.execute("SELECT * FROM information")
-            kern, nv, proc = list(r.fetchone())
+            kern, nv, proc = list(r.fetchone())  # List assignament ili otpakovanje
             resp = {'kernel_version': kern,
                     'name_and_version_of_dist': nv,
                     'processor': proc
                     }
 
-        return json.dumps(resp)
+            return resp
 
-    # Zadatak 3
     @cherrypy.expose
+    # /logs ruta streama response sa yield (omogućeno na dnu metode)
     def logs(self, *custom_log):
 
-        print(custom_log)
+        # Putanja do access_log.txt
         path_to_access_file = os.path.join(*[str(path_) for path_ in custom_log])
+        # Putanja gdje će se razlike zapisivat
         path_to_diff_log = os.path.join(os.getcwd(), 'diff.txt')
 
         first_time = True
@@ -109,22 +117,35 @@ class ProcessControl(object):
         sorted_freq = []
 
         while True:
+
             yield bytes('Streaming request for diff between log files...\n', 'utf-8')
 
             if first_time:
+                # Prvi pristup access_log.txt file-u dohvata sav sadržaj.
+                # Tek nakon 10 sekundi, uspoređuje se access_log.txt ponovno
+                # sa starim sadržajem, koji je predstavljen sa "diffs" varijablom.
+                # Razlike u zapisu access_log.txt se zapisuju, tj. razlike svakih
+                # 10 sekundi.
                 with open(path_to_access_file) as access_log:
-                    diffs = access_log.readlines()
-                    words = ' '.join(diffs).replace('\n', '').split(' ')
+                    diffs = access_log.readlines()  # Dohvati sve linije u access_log.txt
+                    words = ' '.join(diffs).replace('\n', '').split(' ')  # Sve riječi
+                    # Prebrojavanje riječi upotrebom dict comprehension
                     freq_counter = {key: words.count(key) for key in words}
+                    # Dohvatanje najčešće 3 riječi. Riječ je zadataka od razmaka do razmaka
+                    # tako da riječ može biti i '-'.
                     sorted_freq = sorted(freq_counter.items(), key=operator.itemgetter(1))[-3::]
                     sorted_freq = list(reversed(sorted_freq))
                 first_time = False
-                time.sleep(5)
+                time.sleep(10)  # 10 sekundi čekanje
             else:
-                print('Here I come with diffs')
                 with open(path_to_access_file) as access_log:
                     access_log_lines = access_log.readlines()
+                    # Razlika između sadržaja access_log.txt prije 10 sekundi
+                    # te access_log.txt u sadašnjem trenutku.
                     diff = difflib.ndiff(access_log_lines, diffs)
+
+                # Otvaranje file radi čitanja i pisanja
+                # TODO: Napravit da se unose najcesce rijeci kao zadnji sadrzaj
                 with open(path_to_diff_log, 'r+') as result:
                     result.write('ACCESS_LOG.txt\n')
                     result.read()
@@ -139,17 +160,19 @@ class ProcessControl(object):
                         result.write(word[0] + " ")
                     result.write('\n')
                 time.sleep(10)
-    logs._cp_config = {'response.stream': True}
+    logs._cp_config = {'response.stream': True}  # Za streaming requests
 
 
-# Vezano za Zadatak 4, te ujedno i 2.
+# Pravimo tablicu "information" ako ne postoji na početku izvršavanja
+# TODO: Nadopunit stupce tablice prikladnim informacijama
 def setup():
     with sqlite3.connect(DATABASE) as con:
         con.execute("CREATE TABLE IF NOT EXISTS information (kernel_version,"
                     "name_and_version_of_dist,"
                     "processor)")
 
-# Vezano za Zadatak 4, te ujedno i 2.
+
+# Čišćenje baze podataka na kraju
 def cleanup():
     with sqlite3.connect(DATABASE) as con:
         con.execute("DROP TABLE information")
@@ -166,3 +189,4 @@ if __name__ == '__main__':
     }
 
     cherrypy.quickstart(ProcessControl(), '/', conf)
+
