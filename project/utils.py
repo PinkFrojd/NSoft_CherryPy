@@ -50,6 +50,7 @@ def setup():
                     "disks_memory)")
 
 
+
 def cleanup():
     """Function to clear table at the end.
 

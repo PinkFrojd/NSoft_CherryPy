@@ -136,62 +136,36 @@ class ProcessControl(object):
         return info
 
     @cherrypy.expose
-    # /logs ruta streama response sa yield (omogućeno na dnu metode)
     def logs(self, *custom_log):
+        """Zadatak 3 - Timer.
 
-        # Putanja do access_log.txt
+        Razlike access_log.txt file-a u intervalima od 10 sekundi
+        sa vremenom razlike i 3 najčešće riječi na dnu.
+
+        :param custom_log: Putanja do file
+        :return: Streaming response
+        """
+
+        # Putanja do custom log file (u mom primjeru access_log.txt)
         path_to_access_file = os.path.join(*[str(path_) for path_ in custom_log])
         # Putanja gdje će se razlike zapisivat
         path_to_diff_log = os.path.join(os.getcwd(), 'diff.txt')
 
-        first_time = True
-        diffs = []
-        sorted_freq = []
+        diffs, sorted_freq = logs_timer.first_diff(path_to_access_file)
+        yield bytes('Streaming request for diff between log files...\n', 'utf-8')
+        time.sleep(10)
 
         while True:
-
             yield bytes('Streaming request for diff between log files...\n', 'utf-8')
 
-            if first_time:
-                # Prvi pristup access_log.txt file-u dohvata sav sadržaj.
-                # Tek nakon 10 sekundi, uspoređuje se access_log.txt ponovno
-                # sa starim sadržajem, koji je predstavljen sa "diffs" varijablom.
-                # Razlike u zapisu access_log.txt se zapisuju, tj. razlike svakih
-                # 10 sekundi.
-                with open(path_to_access_file) as access_log:
-                    diffs = access_log.readlines()  # Dohvati sve linije u access_log.txt
-                    words = ' '.join(diffs).replace('\n', '').split(' ')  # Sve riječi
-                    # Prebrojavanje riječi upotrebom dict comprehension
-                    freq_counter = {key: words.count(key) for key in words}
-                    # Dohvatanje najčešće 3 riječi. Riječ je zadataka od razmaka do razmaka
-                    # tako da riječ može biti i '-'.
-                    sorted_freq = sorted(freq_counter.items(), key=operator.itemgetter(1))[-3::]
-                    sorted_freq = list(reversed(sorted_freq))
-                first_time = False
-                time.sleep(10)  # 10 sekundi čekanje
-            else:
-                with open(path_to_access_file) as access_log:
-                    access_log_lines = access_log.readlines()
-                    # Razlika između sadržaja access_log.txt prije 10 sekundi
-                    # te access_log.txt u sadašnjem trenutku.
-                    diff = difflib.ndiff(access_log_lines, diffs)
+            with open(path_to_access_file) as access_log:
+                # Razlika između sadržaja access_log.txt prije 10 sekundi
+                # te access_log.txt u sadašnjem trenutku.
+                access_log_lines = access_log.readlines()
+                diff = difflib.ndiff(access_log_lines, diffs)
 
-                # Otvaranje file radi čitanja i pisanja
-                # TODO: Napravit da se unose najcesce rijeci kao zadnji sadrzaj
-                with open(path_to_diff_log, 'r+') as result:
-                    result.write('ACCESS_LOG.txt\n')
-                    result.read()
-                    result.write('=== RAZLIKA ===\n')
-                    for line in diff:
-                        if line.startswith('- '):
-                            result.write(line.replace('- ', '', 1))
-                    result.write('=== VRIJEME ZAPISA ===\n')
-                    result.write(time.ctime())
-                    result.write('\n=== NAJCESCE RIJECI ===\n')
-                    for word in sorted_freq:
-                        result.write(word[0] + " ")
-                    result.write('\n')
-                time.sleep(10)
+            logs_timer.diffs(path_to_diff_log, diff, sorted_freq)
+            time.sleep(10)
     logs._cp_config = {'response.stream': True}  # Za streaming requests
 
 
