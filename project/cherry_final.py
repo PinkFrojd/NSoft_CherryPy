@@ -151,7 +151,7 @@ class ProcessControl(object):
         # Putanja gdje će se razlike zapisivat
         path_to_diff_log = os.path.join(os.getcwd(), 'diff.txt')
 
-        diffs, sorted_freq = logs_timer.first_diff(path_to_access_file)
+        sorted_freq, diffs = logs_timer.first_diff(path_to_access_file)
         yield bytes('Streaming request for diff between log files...\n', 'utf-8')
         time.sleep(10)
 
@@ -164,7 +164,8 @@ class ProcessControl(object):
                 access_log_lines = access_log.readlines()
                 diff = difflib.ndiff(access_log_lines, diffs)
 
-            logs_timer.diffs(path_to_diff_log, diff, sorted_freq)
+            sorted_freq, _ = logs_timer.first_diff(path_to_access_file)
+            logs_timer.diffs(path_to_access_file, path_to_diff_log, diff, sorted_freq)
             time.sleep(10)
     logs._cp_config = {'response.stream': True}  # Za streaming requests
 

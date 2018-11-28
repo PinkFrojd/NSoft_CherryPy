@@ -15,7 +15,7 @@ def first_diff(path_to_access_file):
     10 sekundi.
 
     :param path_to_access_file: putanja do access_log.txt
-    :return: diffs_, sorted_freq
+    :return:  sorted_freq, diffs_
     """
     with open(path_to_access_file) as access_log:
         diffs_ = access_log.readlines()  # Dohvati sve linije u access_log.txt
@@ -26,23 +26,28 @@ def first_diff(path_to_access_file):
         # tako da riječ može biti i '-'.
         sorted_freq = sorted(freq_counter.items(), key=operator.itemgetter(1))[-3::]
         sorted_freq = list(reversed(sorted_freq))
-        return diffs_, sorted_freq
+        return sorted_freq, diffs_
 
 
-def diffs(path_to_diff_log, diff, sorted_freq):
+def diffs(path_to_access_file, path_to_diff_log, diff, sorted_freq):
     """Helper function za sve ostale razlike.
 
     Funkcija koja uspoređuje razlike u vremenskim intervalim
     i zapisuje u *diffs.txt*.
     """
     with open(path_to_diff_log, 'r+') as result:
-        result.write('ACCESS_LOG.txt\n')
-        # TODO: Najčešće riječi zadnje
-        while True:
-            line = result.readline()
+        result.write(str(path_to_access_file))
+        line = result.readline()
+        while line:
             if line == '=== NAJCESCE RIJECI ===\n':
+                position_length = len('==NAJCESCE RIJECI==')
+                for word in sorted_freq:
+                    position_length += len(word[0])
+                relative_jump = result.tell() - position_length
+                result.seek(relative_jump)
                 break
-        result.write('=== RAZLIKA ===\n')
+            line = result.readline()
+        result.write('\n=== RAZLIKA ===\n')
         for line in diff:
             if line.startswith('- '):
                 result.write(line.replace('- ', '', 1))
@@ -52,3 +57,4 @@ def diffs(path_to_diff_log, diff, sorted_freq):
         for word in sorted_freq:
             result.write(word[0] + " ")
         result.write('\n')
+

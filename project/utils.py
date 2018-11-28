@@ -5,7 +5,7 @@ DATABASE = 'sample.db'
 
 
 def get_information():
-    """Utility function for collecting all information about system
+    """Utility function for collecting all information about system.
 
     :return: dict info: dictionary with information which
                         acts as (key, value) pair

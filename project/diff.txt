@@ -1,0 +1,59 @@
+access_log.txt
+=== RAZLIKA ===
+127.0.0.1 - - [28/Nov/2018:23:41:58] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:58] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:58] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:59] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:59] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:59] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:00] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:00] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+=== VRIJEME ZAPISA ===
+Wed Nov 28 23:42:09 2018
+=== RAZLIKA ===
+127.0.0.1 - - [28/Nov/2018:23:41:58] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:58] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:58] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:59] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:59] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:59] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:00] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:00] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:08] "GET /information_zadatak_2 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:10] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:13] "GET /information_zadatak_2 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+=== VRIJEME ZAPISA ===
+Wed Nov 28 23:42:22 2018
+=== RAZLIKA ===
+127.0.0.1 - - [28/Nov/2018:23:41:58] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:58] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:58] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:59] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:59] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:59] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:00] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:00] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:08] "GET /information_zadatak_2 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:10] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:13] "GET /information_zadatak_2 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+=== VRIJEME ZAPISA ===
+Wed Nov 28 23:42:35 2018
+=== RAZLIKA ===
+127.0.0.1 - - [28/Nov/2018:23:41:58] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:58] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:58] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:59] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:59] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:41:59] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:00] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:00] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:08] "GET /information_zadatak_2 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:10] "GET /information_zadatak_4 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:13] "GET /information_zadatak_2 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:37] "GET /information_zadatak_2 HTTP/1.1" 200 286 "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:38] "GET /favicon.ico HTTP/1.1" 200 1406 "http://127.0.0.1:8080/information_zadatak_2" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+127.0.0.1 - - [28/Nov/2018:23:42:45] "GET /status HTTP/1.1" 200 - "" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 OPR/56.0.3051.116"
+=== VRIJEME ZAPISA ===
+Wed Nov 28 23:42:48 2018
+=== NAJCESCE RIJECI ===
+- "Mozilla/5.0 HTTP/1.1" 
