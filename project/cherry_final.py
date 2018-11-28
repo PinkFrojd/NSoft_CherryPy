@@ -1,16 +1,15 @@
 import difflib
 import operator
-import platform
 import sqlite3
 import time
 import os
 import subprocess
 import signal
-import json
 
 import cherrypy
 
-DATABASE = 'sample.db'
+from project import utils
+
 PROCESSES_EXECUTED = []  # List for /status route
 
 
@@ -20,44 +19,50 @@ class ProcessControl(object):
     def index(self):
         return "Dummy Welcome"
 
-    # Zadatak 1 - Start, Stop i Status
     @cherrypy.expose
-    @cherrypy.tools.json_out()
     def start(self):
+        """Zadatak 1 - *start*
+
+        Pokrenuti arbitrarni proces (npr neki browser)
+        te vratiti informaciju o pidu.
+
+        :returns: [int] process_pids: Lista PID-ova pokrenutih procesa
+        """
 
         global PROCESSES_EXECUTED
 
-        # Arbitrarni procesi 
+        # Putanja do arbitrarnih procesa
         gedit_path = os.path.join('/', 'usr', 'bin', 'gedit')
         sublime_path = os.path.join('/', 'usr', 'bin', 'subl')
 
         # Pokretanje arbitrarnih procesa
         subprocess.Popen([gedit_path], shell=True)
-        subprocess.Popen([sublime_path], shell=True)      
+        subprocess.Popen([sublime_path], shell=True)
 
         process_names = ['gedit', 'sublime_text']
-
         process_pids = []
 
         for process in process_names:
             try:
-                # Dohvatanje PID-a procesa
+                # Dohvatanje PID-a procesa ako postoji
                 process_pids.append(int(subprocess.check_output(['pidof', '-s', process])))
             except Exception:
-                raise ValueError('No process named: {}'.format(process))
+                raise ValueError('No process named: {}'.format(process)) from None
 
         # Svi pokrenuti procesi i PID-ovi za /status rutu
         for _p in range(len(process_names)):
             PROCESSES_EXECUTED.append({'name': process_names[_p],
                                        'PID': process_pids[_p]})
 
-        # Response je lista svih PID-ova
-        return json.dumps([int(p) for p in process_pids])
+        # Response je serijalizirana lista PID-ova pretvorenih u string.
+        return [int(p) for p in process_pids]
 
     @cherrypy.expose
     def stop(self, pid):
+        """Zadatak 1 - *stop*
 
-        # Prosljedjeni pid parametar završava proces sa odgovarajućim PID-om
+        Zaustaviti proces sa proslijedjenim pidom.
+        """
 
         try:
             os.kill(int(pid), signal.SIGKILL)
@@ -66,42 +71,70 @@ class ProcessControl(object):
             return 'Process with PID {} does not exist'.format(pid)
         except ValueError:
             return 'Invalid PID entered'
+        finally:
+            return 'Something else happened...'
 
     @cherrypy.expose
     def status(self):
+        """Zadatak 1 - *status*
 
-        # Vraća se lista sa imenom procesa i njegovim PID-om.
-        # (For petlja jer response ne treba biti JSON)
+        Ispisati listu procesa (tj njihovih pidova) koje
+        smo pokrenuli funkcionalnoscu iz prve tocke.
 
-        resp = ''
+        :returns: str resp: Lista sa imenom i prikaldnim PID-om procesa
+        """
 
-        for process in PROCESSES_EXECUTED:
-            print(process.get('name'), process.get('PID'))
-            resp += '\n' + process.get('name') + ' ' + str(process.get('PID')) + '\n\n'
-
-        return resp
+        return [process.get('name') + ' ' + str(process.get('PID')) + ' '
+                for process in PROCESSES_EXECUTED]
 
     @cherrypy.expose
     @cherrypy.tools.json_out()
-    def information(self):
+    def information_zadatak_2(self):
+        """Zadatak 2 - Information Flow
 
-        with sqlite3.connect(DATABASE) as c:
-            # Unos u bazu podatka u tablicu "information"
-            c.execute("INSERT INTO information VALUES (?, ?, ?)",
-                      [platform.platform(),
-                       platform.architecture()[0] + platform.version(),
-                       platform.processor()]
+        Prikupiti razne informacije o sustavu te ih vratit u
+        JSON formatu. Ujedno se prikupljene informacije unose
+        u tablicu *information*.
+
+        :returns: JSON object
+        """
+
+        # Prikupljanje svih potrebnih informacija
+        info = utils.get_information()
+
+        with sqlite3.connect(utils.DATABASE) as c:
+            c.execute("INSERT INTO information VALUES (?, ?, ?, ?, ?)",
+                      [info.get('Version_of_kernel'),
+                       info.get('Name_and_version_of_distribution'),
+                       info.get('Processor'),
+                       info.get('Firmware'),
+                       info.get('Disks')]
                       )
 
-            # Čitanje zapisanog iz tablice "information".
+        return info
+
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    def information_zadatak_4(self):
+        """Zadatak 4 - Information Flow Nadopunjen
+
+        Sve informacije se dohvataju iz tablice *information* i
+        vraćaju u JSON formatu.
+
+        :returns: JSON object
+        """
+        with sqlite3.connect(utils.DATABASE) as c:
             r = c.execute("SELECT * FROM information")
-            kern, nv, proc = list(r.fetchone())  # List assignament ili otpakovanje
-            resp = {'kernel_version': kern,
-                    'name_and_version_of_dist': nv,
-                    'processor': proc
+            helper_info = list(r.fetchone())
+            # BUG: r.fetchone().keys() ne postoji ?
+            info = {'Version_of_kernel': helper_info[0],
+                    'Name_and_version_of_distribution': helper_info[1],
+                    'Processor': helper_info[2],
+                    'Firmware': helper_info[3],
+                    'Disks': helper_info[4]
                     }
 
-            return resp
+        return info
 
     @cherrypy.expose
     # /logs ruta streama response sa yield (omogućeno na dnu metode)
@@ -163,30 +196,10 @@ class ProcessControl(object):
     logs._cp_config = {'response.stream': True}  # Za streaming requests
 
 
-# Pravimo tablicu "information" ako ne postoji na početku izvršavanja
-# TODO: Nadopunit stupce tablice prikladnim informacijama
-def setup():
-    with sqlite3.connect(DATABASE) as con:
-        con.execute("CREATE TABLE IF NOT EXISTS information (kernel_version,"
-                    "name_and_version_of_dist,"
-                    "processor)")
-
-
-# Čišćenje baze podataka na kraju
-def cleanup():
-    with sqlite3.connect(DATABASE) as con:
-        con.execute("DROP TABLE information")
-
-
 if __name__ == '__main__':
-    cherrypy.engine.subscribe('start', setup)
-    cherrypy.engine.subscribe('stop', cleanup)
 
-    conf = {
-        '/': {
-            'log.access_file': './access_log.txt',
-        }
-    }
+    cherrypy.engine.subscribe('start', utils.setup)
+    cherrypy.engine.subscribe('stop', utils.cleanup)
 
-    cherrypy.quickstart(ProcessControl(), '/', conf)
+    cherrypy.quickstart(ProcessControl(), '/', "app.conf")
 
