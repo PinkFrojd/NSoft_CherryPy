@@ -147,7 +147,7 @@ class ProcessControl(object):
         """
 
         # Putanja do custom log file (u mom primjeru access_log.txt)
-        path_to_access_file = os.path.join(*[str(path_) for path_ in custom_log])
+        path_to_access_file = os.path.join('/', *[str(path_) for path_ in custom_log])
         # Putanja gdje će se razlike zapisivat
         path_to_diff_log = os.path.join(os.getcwd(), 'diff.txt')
 
